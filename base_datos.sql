@@ -123,3 +123,24 @@ INSERT INTO incidentes (descripcion, frecuencia, usuario_id, plataforma_id) VALU
 
 INSERT INTO reportes (incidente_id, nivel_riesgo, fecha) VALUES
 (1, 'alto', GETDATE());
+
+-- Procedimiento almacenado
+GO
+CREATE PROCEDURE RegistrarIntervencionCompleta
+    @reporte_id INT,
+    @moderador_id INT,
+    @psicologo_id INT,
+    @descripcion NVARCHAR(255)
+AS
+BEGIN
+    DECLARE @id_intervencion INT;
+
+    INSERT INTO intervenciones (reporte_id, moderador_id, psicologo_id)
+    VALUES (@reporte_id, @moderador_id, @psicologo_id);
+
+    SET @id_intervencion = SCOPE_IDENTITY();
+
+    INSERT INTO acciones (descripcion, intervencion_id)
+    VALUES (@descripcion, @id_intervencion);
+END;
+GO
