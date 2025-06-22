@@ -18,6 +18,16 @@ Proyecto académico en Java (Maven + Swing) conectado a SQL Server, diseñado pa
 - Base de datos creada: `PlataformaApoyo`
 - Conexión configurada en `UsuarioDAO.java`
 
+## 🧩 Cómo importar la base de datos
+
+1. Abre SQL Server o DBeaver.
+2. Ejecuta el script `base_datos.sql` incluido en este repositorio.
+3. Esto creará todas las tablas, datos de prueba y el procedimiento almacenado necesario.
+4. Verifica que tu conexión use:
+   - Base de datos: `PlataformaAdolecentes`
+   - Usuario: `sa`
+   - Contraseña: `TuContraseña`
+
 ## ▶️ Cómo ejecutar
 
 1. Clona este repositorio:
