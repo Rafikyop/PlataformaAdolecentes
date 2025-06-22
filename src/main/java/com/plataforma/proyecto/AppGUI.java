@@ -101,6 +101,9 @@ public class AppGUI extends JFrame {
     // Mostrar pestañas en la ventana
         add(tabs);
 
+    /* Esta parte del codigo fue el inicio del panel, lo dejo para que se pueda ver en el archivo java y que lo otro no salio de la nada, realmente esto hacia
+     que los botones se alargaran cuando la pestana se alargaba a la par, entonces cambie mejor de un panel, para un form panel y que no se deformara la estructura
+     tambien se pusieron los paneles con un BoxLayout para que se quedaran estaticos. */
 
         /*JTextField txtIdModificar = new JTextField();
         JTextField txtNuevoTipo = new JTextField();
