@@ -2,6 +2,8 @@ package com.plataforma.proyecto;
 
 import com.plataforma.proyecto.dao.UsuarioDAO;
 import com.plataforma.proyecto.dto.UsuarioDTO;
+import com.plataforma.proyecto.dao.IntervencionDAO;
+import com.plataforma.proyecto.dto.IntervencionDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +20,7 @@ public class AppGUI extends JFrame {
     private JButton btnActualizar, btnEliminar, btnCrear, btnListar;
 
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private IntervencionDAO intervencionDAO = new IntervencionDAO();
 
     public AppGUI() {
         setTitle("Plataforma Apoyo - Gestión de Usuarios");
@@ -97,6 +100,7 @@ public class AppGUI extends JFrame {
 
     // Agregar pestaña
         tabs.addTab("Usuarios", panelUsuarios);
+        tabs.addTab("Intervenciones", crearPanelIntervenciones());
 
     // Mostrar pestañas en la ventana
         add(tabs);
@@ -184,6 +188,56 @@ public class AppGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
             }
         });
+    }
+
+     // Crear panel de intervenciones
+     private JPanel crearPanelIntervenciones() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createTitledBorder("Registrar Intervención"));
+    
+        JPanel campos = new JPanel(new GridLayout(5, 2, 5, 5));
+    
+        JTextField txtReporteId = new JTextField();
+        JTextField txtModeradorId = new JTextField();
+        JTextField txtPsicologoId = new JTextField();
+        JTextArea txtDescripcion = new JTextArea(3, 20);
+        JButton btnRegistrar = new JButton("Registrar Intervención");
+    
+        campos.add(new JLabel("ID Reporte:"));
+        campos.add(txtReporteId);
+        campos.add(new JLabel("ID Moderador:"));
+        campos.add(txtModeradorId);
+        campos.add(new JLabel("ID Psicólogo:"));
+        campos.add(txtPsicologoId);
+        campos.add(new JLabel("Descripción de Acción:"));
+        campos.add(new JScrollPane(txtDescripcion));
+    
+        panel.add(campos);
+        panel.add(btnRegistrar);
+    
+        btnRegistrar.addActionListener(e -> {
+            try {
+                int reporteId = Integer.parseInt(txtReporteId.getText());
+                int moderadorId = Integer.parseInt(txtModeradorId.getText());
+                int psicologoId = Integer.parseInt(txtPsicologoId.getText());
+                String descripcion = txtDescripcion.getText();
+    
+                IntervencionDTO dto = new IntervencionDTO(reporteId, moderadorId, psicologoId, descripcion);
+                intervencionDAO.registrarIntervencion(dto);
+    
+                JOptionPane.showMessageDialog(panel, "Intervención registrada correctamente.");
+                txtReporteId.setText("");
+                txtModeradorId.setText("");
+                txtPsicologoId.setText("");
+                txtDescripcion.setText("");
+    
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(panel, "Verifica que los IDs sean números válidos.");
+            }
+        });
+    
+        return panel;
     }
 
     private void limpiarCampos() {
